@@ -3,6 +3,8 @@ using System.Collections;
 
 public class TapManager : MonoBehaviour
 {
+    public GameObject commandObj;
+
     private GameObject buttonDownObj;     //仮の置物
     private GameObject buttonUpObj;       //仮の置物
 
@@ -28,8 +30,16 @@ public class TapManager : MonoBehaviour
                 //パワーアップボタンだった場合
                 if (buttonDownObj.tag == "PowerUp")
                 {
-                    //ボタンオブジェクトに入れてるButtonスクリプトのbuttonDownFlagをOnにして処理を実行させる。
+                    //ボタンオブジェクトに入れてるPowerUpスクリプトのbuttonDownFlagをOnにして処理を実行させる。
                     buttonDownObj.GetComponent<PowerUp>().buttonDownFlag = true;
+                }
+                //コマンドボタンだった場合
+                else if(buttonDownObj.tag == "Command")
+                {
+                    //ボタンオブジェクトに入れてるButtonスクリプトのbuttonDownFlagをOnにして処理を実行させる。
+                    buttonDownObj.GetComponent<CommandButton>().buttonDownFlag = true;
+                    commandObj.transform.position = buttonDownObj.transform.position;
+                    commandObj.SetActive(true);
                 }
             }
 
@@ -37,12 +47,23 @@ public class TapManager : MonoBehaviour
             {
                 buttonUpObj = aCollider2d.gameObject;
 
-                //パワーアップボタンかつ同じオブジェクトか確認
-                if(buttonUpObj.tag == "PowerUp" && buttonUpObj == buttonDownObj)
+                //パワーアップボタンかつ押した時と同じオブジェクトか確認
+                if (buttonUpObj.tag == "PowerUp" && buttonUpObj == buttonDownObj)
                 {
                     buttonUpObj.GetComponent<PowerUp>().runFlag = true;
                 }
+                //コマンドボタンかつ押した時と同じオブジェクトか確認
+                else if (buttonUpObj.tag == "Command" && buttonUpObj == buttonDownObj)
+                {
+                    buttonUpObj.GetComponent<CommandButton>().runFlag = true;
+                }                
             }
         }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            commandObj.SetActive(false);
+        }
+
     }
 }

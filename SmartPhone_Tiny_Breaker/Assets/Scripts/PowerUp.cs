@@ -11,7 +11,6 @@ public class PowerUp : MonoBehaviour
     [HideInInspector]
     public bool runFlag = false;     //ボタンが押されたかのフラグを確認(呼び出しにだけ使うのでInspectorには表示しない。)
 
-    private GameObject checkObj;            //TapManagerでタップしたオブジェクトを確保する。
     private SpriteRenderer _spriteRender;   //GetComponentを多く使うので事前に確保
 
     // Use this for initialization
