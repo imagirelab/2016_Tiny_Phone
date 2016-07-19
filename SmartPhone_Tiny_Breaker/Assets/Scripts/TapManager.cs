@@ -3,8 +3,6 @@ using System.Collections;
 
 public class TapManager : MonoBehaviour
 {
-    public GameObject commandObj;
-
     private GameObject buttonDownObj;     //仮の置物
     private GameObject buttonUpObj;       //仮の置物
 
@@ -19,10 +17,11 @@ public class TapManager : MonoBehaviour
         Vector3 aTapPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Collider2D aCollider2d = Physics2D.OverlapPoint(aTapPoint);
 
-        //タップ地点に当たり判定があった場合
-        if (aCollider2d)
+        //クリックしたときのみ
+        if (Input.GetMouseButtonDown(0))
         {
-            if (Input.GetMouseButtonDown(0))
+            //タップ地点に当たり判定があった場合
+            if (aCollider2d)
             {
                 //タップした地点のオブジェクト取得 
                 buttonDownObj = aCollider2d.gameObject;
@@ -33,37 +32,47 @@ public class TapManager : MonoBehaviour
                     //ボタンオブジェクトに入れてるPowerUpスクリプトのbuttonDownFlagをOnにして処理を実行させる。
                     buttonDownObj.GetComponent<PowerUp>().buttonDownFlag = true;
                 }
-                //コマンドボタンだった場合
-                else if(buttonDownObj.tag == "Command")
+                //キャラボタンだった場合
+                else if (buttonDownObj.tag == "Chara")
                 {
                     //ボタンオブジェクトに入れてるButtonスクリプトのbuttonDownFlagをOnにして処理を実行させる。
-                    buttonDownObj.GetComponent<CommandButton>().buttonDownFlag = true;
-                    commandObj.transform.position = buttonDownObj.transform.position;
-                    commandObj.SetActive(true);
+                    buttonDownObj.GetComponent<CharaButton>().buttonDownFlag = true;
                 }
             }
+        }
 
-            if(Input.GetMouseButtonUp(0))
+        //マウスボタンを離したときのみ
+        if(Input.GetMouseButtonUp(0))
+        {
+            //タップ地点に当たり判定があった場合
+            if (aCollider2d)
             {
                 buttonUpObj = aCollider2d.gameObject;
 
                 //パワーアップボタンかつ押した時と同じオブジェクトか確認
                 if (buttonUpObj.tag == "PowerUp" && buttonUpObj == buttonDownObj)
                 {
-                    buttonUpObj.GetComponent<PowerUp>().runFlag = true;
+                    buttonDownObj.GetComponent<PowerUp>().runFlag = true;
                 }
-                //コマンドボタンかつ押した時と同じオブジェクトか確認
-                else if (buttonUpObj.tag == "Command" && buttonUpObj == buttonDownObj)
+                //キャラボタンかつ押した時と同じオブジェクトか確認
+                else if (buttonUpObj.tag == "Chara" && buttonUpObj == buttonDownObj)
                 {
-                    buttonUpObj.GetComponent<CommandButton>().runFlag = true;
-                }                
+                    buttonDownObj.GetComponent<CharaButton>().runFlag = true;
+                }
+                //離した時にコマンドボタンか確認
+                else if (buttonUpObj.tag == "Command")
+                {
+                    buttonDownObj.GetComponent<CharaButton>().CommandCheck();
+                }
+            }
+            else
+            {
+                //キャラボタンだった場合
+                if (buttonDownObj.tag == "Chara")
+                {
+                    buttonDownObj.GetComponent<CharaButton>().CommandInit();
+                }
             }
         }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            commandObj.SetActive(false);
-        }
-
     }
 }
