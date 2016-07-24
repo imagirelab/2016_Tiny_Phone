@@ -24,6 +24,7 @@ public class Summonspirit : SpiritManager
                 spiritList.Add(spiritData);
                 spiritList[spiritList.Count - 1].transform.position = new Vector3(spiritHolder.transform.position.x, spiritHolder.transform.position.y + spiritHolder.GetComponent<SpriteRenderer>().bounds.size.y / 3 - 1.5f * (spiritList.Count - 1), spiritHolder.transform.position.z);
                 Instantiate(spiritList[spiritList.Count - 1]);
+                Debug.Log("summoncount : " + spiritList.Count);
             }
 
             runFlag = false;

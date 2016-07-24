@@ -102,6 +102,7 @@
     <Compile Include="Assets\Scripts\Demons\DemonsAttack.cs" />
     <Compile Include="Assets\Scripts\Demons\GrowPoint.cs" />
     <Compile Include="Assets\Scripts\Demons\Status.cs" />
+    <Compile Include="Assets\Scripts\DragObject.cs" />
     <Compile Include="Assets\Scripts\PowerUp.cs" />
     <Compile Include="Assets\Scripts\Spirit.cs" />
     <Compile Include="Assets\Scripts\SpiritManager.cs" />
@@ -109,8 +110,8 @@
     <Compile Include="Assets\Scripts\StatusUI.cs" />
     <Compile Include="Assets\Scripts\Summonspirit.cs" />
     <Compile Include="Assets\Scripts\TapManager.cs" />
+    <Compile Include="Assets\Scripts\Unit.cs" />
     <Compile Include="Assets\Scripts\UnitStatus.cs" />
-    <Compile Include="Assets\Unit.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />

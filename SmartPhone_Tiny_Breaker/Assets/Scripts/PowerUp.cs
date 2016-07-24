@@ -6,8 +6,6 @@ public class PowerUp : SpiritManager
     public Sprite notButtonDown;            //ボタンが押されてない時のスプライト
     public Sprite ButtonDown;               //ボタンが押された時のスプライト
 
-    public GameObject SpiritManager;
-
     [HideInInspector]
     public bool buttonDownFlag = false;     //ボタンが押されたかのフラグを確認(呼び出しにだけ使うのでInspectorには表示しない。)
     [HideInInspector]
@@ -54,7 +52,7 @@ public class PowerUp : SpiritManager
                     Debug.Log("ポポは魂を吸収して強化した");
                 }
                 else if (this.gameObject.name.ToString().Contains("pipi"))
-                {
+                { 
                     Debug.Log("ピピは魂を吸収して強化した");
                 }
             }

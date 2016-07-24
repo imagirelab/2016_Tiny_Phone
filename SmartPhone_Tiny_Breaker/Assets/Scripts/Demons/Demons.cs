@@ -53,12 +53,31 @@ public class Demons : Unit
 
     //破壊されたときにリストから外す
     void OnDisable()
-    { 
+    {
+         
     }
 
     void Update ()
     {
+        
+    }
 
+    public void powerUp()
+    {
+        //外部からの変更がなかった場合初期の成長値を設定する
+        if (!changeGrowPoint)
+        {
+            growPoint.SetGrowPoint();
+        }
+        //成長値によって今のステータスを算出する
+        for (int i = 0; i < growPoint.CurrentHP_GrowPoint - growPoint.GetHP_GrowPoint; i++)
+            status.CurrentHP += (int)(status.GetHP * 0.5f);
+        for (int i = 0; i < growPoint.CurrentATK_GrowPoint - growPoint.GetATK_GrowPoint; i++)
+            status.CurrentATK += (int)(status.GetATK * 0.5f);
+        for (int i = 0; i < growPoint.CurrentSPEED_GrowPoint - growPoint.CurrentSPEED_GrowPoint; i++)
+            status.CurrentSPEED += (int)(status.GetSPEED * 0.15f);
+        //for (int i = 0; i < growPoint.CurrentAtackTime_GrowPoint - growPoint.CurrentAtackTime_GrowPoint; i++)
+        //    status.CurrentAtackTime += (int)(status.GetAtackTime * 0.15f);
     }
 
 }
