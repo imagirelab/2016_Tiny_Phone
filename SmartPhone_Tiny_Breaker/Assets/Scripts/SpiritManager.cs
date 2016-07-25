@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class SpiritManager : MonoBehaviour
 {
+    [HideInInspector]
     public GameObject demon;
 
     public GameObject spiritData;
@@ -17,7 +18,7 @@ public class SpiritManager : MonoBehaviour
     public static bool useSpiritFlag = false;
 
     //成長値の保存変数
-    GrowPoint growPoint;
+    public GrowPoint growPoint;
 
     // Use this for initialization
     void Start()
@@ -28,7 +29,10 @@ public class SpiritManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(spiritList.Count == 0)
+        {
+            useSpiritFlag = false;
+        }
     }
 
     public void useSpirit()
@@ -60,10 +64,6 @@ public class SpiritManager : MonoBehaviour
             useSpiritFlag = true;
 
             spiritList.RemoveAt(0);
-        }
-        else
-        {
-            useSpiritFlag = false;
         }
     }
 }

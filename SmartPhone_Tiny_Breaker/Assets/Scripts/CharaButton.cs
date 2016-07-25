@@ -1,8 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
+using NCMB;
 
 public class CharaButton : MonoBehaviour
 {
+    public enum Type
+    {
+        POPO,
+        PUPU,
+        PIPI
+    }
+    [SerializeField, TooltipAttribute("種類")]
+    private Type DemonType = Type.POPO;
+
+    public enum Order
+    {
+        Atack_Soldier,
+        Atack_House,
+        Atack_Castle,
+        Get_Spirit
+    }
+    [SerializeField, TooltipAttribute("種類")]
+    private Order demonOrder = Order.Atack_Castle;
+
+    public GameObject _DemonData;           //送信するためのオブジェクトデータ
     public GameObject CommandObj;
 
     public Sprite notButtonDown;            //ボタンが押されてない時のスプライト
@@ -14,6 +35,10 @@ public class CharaButton : MonoBehaviour
     public bool runFlag = false;     //ボタンが押されたかのフラグを確認(呼び出しにだけ使うのでInspectorには表示しない。)
 
     private SpriteRenderer _spriteRender;   //GetComponentを多く使うので事前に確保
+
+    // クラスのNCMBObjectを作成
+    NCMBObject demonDataClass = new NCMBObject("DemonData");        //デーモンのデータ情報
+    NCMBObject demonOrderClass = new NCMBObject("DemonOrder");      //デーモンの命令情報
 
     // Use this for initialization
     void Start()
@@ -41,19 +66,12 @@ public class CharaButton : MonoBehaviour
         //TapManagerからrunFlagを受け取っているか確認
         if (runFlag)
         {
-            //ボタンのゲームオブジェクトの名前から参照("名前をしっかり整えること")
-            if (this.gameObject.name.ToString().Contains("pupu"))
-            {
-                Debug.Log("ププを召喚した");
-            }
-            else if (this.gameObject.name.ToString().Contains("popo"))
-            {
-                Debug.Log("ポポを召喚した");
-            }
-            else if (this.gameObject.name.ToString().Contains("pipi"))
-            {
-                Debug.Log("ピピを召喚した");
-            }
+            demonDataClass["HP"] = _DemonData.GetComponent<Unit>().status.CurrentHP.ToString();
+            demonDataClass["ATK"] = _DemonData.GetComponent<Unit>().status.CurrentATK.ToString();
+            demonDataClass["DEX"] = _DemonData.GetComponent<Unit>().status.CurrentSPEED.ToString();
+            demonDataClass["Type"] = DemonType.ToString();
+            // データストアへの登録
+            demonDataClass.SaveAsync();
 
             CommandInit();
             runFlag = false;       
@@ -67,63 +85,37 @@ public class CharaButton : MonoBehaviour
 
         if (aCollider2d)
         {
-            //ボタンのゲームオブジェクトの名前から参照("名前をしっかり整えること")
-            if (this.gameObject.name.ToString().Contains("pupu"))
+            if (aCollider2d.name == "castle")
             {
-                if (aCollider2d.name == "castle")
-                {
-                    Debug.Log("ププは城");
-                }
-                else if (aCollider2d.name == "house")
-                {
-                    Debug.Log("ププは家");
-                }
-                else if (aCollider2d.name == "soldier")
-                {
-                    Debug.Log("ププは兵");
-                }
-                else if (aCollider2d.name == "spirit")
-                {
-                    Debug.Log("ププは魂");
-                }
+                demonOrder = Order.Atack_Castle;
+                demonOrderClass["Order"] = demonOrder.ToString();
+                demonOrderClass["Type"] = DemonType.ToString();
+                // データストアへの登録
+                demonOrderClass.SaveAsync();
             }
-            else if (this.gameObject.name.ToString().Contains("popo"))
+            else if (aCollider2d.name == "house")
             {
-                if (aCollider2d.name == "castle")
-                {
-                    Debug.Log("ポポは城");
-                }
-                else if (aCollider2d.name == "house")
-                {
-                    Debug.Log("ポポは家");
-                }
-                else if (aCollider2d.name == "soldier")
-                {
-                    Debug.Log("ポポは兵");
-                }
-                else if (aCollider2d.name == "spirit")
-                {
-                    Debug.Log("ポポは魂");
-                }
+                demonOrder = Order.Atack_House;
+                demonOrderClass["Order"] = demonOrder.ToString();
+                demonOrderClass["Type"] = DemonType.ToString();
+                // データストアへの登録
+                demonOrderClass.SaveAsync();
             }
-            else if (this.gameObject.name.ToString().Contains("pipi"))
+            else if (aCollider2d.name == "soldier")
             {
-                if (aCollider2d.name == "castle")
-                {
-                    Debug.Log("ピピは城");
-                }
-                else if (aCollider2d.name == "house")
-                {
-                    Debug.Log("ピピは家");
-                }
-                else if (aCollider2d.name == "soldier")
-                {
-                    Debug.Log("ピピは兵");
-                }
-                else if (aCollider2d.name == "spirit")
-                {
-                    Debug.Log("ピピは魂");
-                }
+                demonOrder = Order.Atack_Soldier;
+                demonOrderClass["Order"] = demonOrder.ToString();
+                demonOrderClass["Type"] = DemonType.ToString();
+                // データストアへの登録
+                demonOrderClass.SaveAsync();
+            }
+            else if (aCollider2d.name == "spirit")
+            {
+                demonOrder = Order.Get_Spirit;
+                demonOrderClass["Order"] = demonOrder.ToString();
+                demonOrderClass["Type"] = DemonType.ToString();
+                // データストアへの登録
+                demonOrderClass.SaveAsync();
             }
         }
 

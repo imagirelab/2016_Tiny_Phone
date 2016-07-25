@@ -4,8 +4,6 @@ using System.Collections;
 public class Spirit : SpiritManager
 {
     public int id;
-    //魂の仮ステータス
-    public GrowPoint growPoint;
 
     // Use this for initialization
     void Start ()
@@ -17,10 +15,10 @@ public class Spirit : SpiritManager
 	// Update is called once per frame
 	void Update ()
     {
-        ChangeSpirit();
+        CheckSpirit();
 	}
 
-    public void ChangeSpirit()
+    public void CheckSpirit()
     {
         if (useSpiritFlag)
         {
@@ -30,16 +28,14 @@ public class Spirit : SpiritManager
             }
             else
             {
-                id -= 1;
+                --id;
                 transform.position = new Vector3(spiritHolder.transform.position.x, spiritHolder.transform.position.y + spiritHolder.GetComponent<SpriteRenderer>().bounds.size.y / 3 - 1.5f * id, spiritHolder.transform.position.z);
 
                 if (id == spiritList.Count - 1)
                 {
                     useSpiritFlag = false;
                 }
-            }
-
-            
+            }            
         }
     }
 }
