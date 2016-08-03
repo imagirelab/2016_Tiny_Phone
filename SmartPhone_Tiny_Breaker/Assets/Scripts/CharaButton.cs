@@ -71,6 +71,7 @@ public class CharaButton : MonoBehaviour
             demonDataClass["DEX"] = _DemonData.GetComponent<Unit>().status.CurrentSPEED.ToString();
             demonDataClass["Order"] = "Summon";
             demonDataClass["Type"] = DemonType.ToString();
+
             // データストアへの登録
             demonDataClass.SaveAsync();
 
