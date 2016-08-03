@@ -6,8 +6,8 @@ public class CharaButton : MonoBehaviour
 {
     public enum Type
     {
-        POPO,
         PUPU,
+        POPO,
         PIPI
     }
     [SerializeField, TooltipAttribute("種類")]
@@ -38,7 +38,6 @@ public class CharaButton : MonoBehaviour
 
     // クラスのNCMBObjectを作成
     NCMBObject demonDataClass = new NCMBObject("DemonData");        //デーモンのデータ情報
-    NCMBObject demonOrderClass = new NCMBObject("DemonOrder");      //デーモンの命令情報
 
     // Use this for initialization
     void Start()
@@ -66,9 +65,11 @@ public class CharaButton : MonoBehaviour
         //TapManagerからrunFlagを受け取っているか確認
         if (runFlag)
         {
+            demonDataClass["PlayerNo"] = "1";
             demonDataClass["HP"] = _DemonData.GetComponent<Unit>().status.CurrentHP.ToString();
             demonDataClass["ATK"] = _DemonData.GetComponent<Unit>().status.CurrentATK.ToString();
             demonDataClass["DEX"] = _DemonData.GetComponent<Unit>().status.CurrentSPEED.ToString();
+            demonDataClass["Order"] = "Summon";
             demonDataClass["Type"] = DemonType.ToString();
             // データストアへの登録
             demonDataClass.SaveAsync();
@@ -88,34 +89,34 @@ public class CharaButton : MonoBehaviour
             if (aCollider2d.name == "castle")
             {
                 demonOrder = Order.Atack_Castle;
-                demonOrderClass["Order"] = demonOrder.ToString();
-                demonOrderClass["Type"] = DemonType.ToString();
+                demonDataClass["Order"] = demonOrder.ToString();
+                demonDataClass["Type"] = DemonType.ToString();
                 // データストアへの登録
-                demonOrderClass.SaveAsync();
+                demonDataClass.SaveAsync();
             }
             else if (aCollider2d.name == "house")
             {
                 demonOrder = Order.Atack_House;
-                demonOrderClass["Order"] = demonOrder.ToString();
-                demonOrderClass["Type"] = DemonType.ToString();
+                demonDataClass["Order"] = demonOrder.ToString();
+                demonDataClass["Type"] = DemonType.ToString();
                 // データストアへの登録
-                demonOrderClass.SaveAsync();
+                demonDataClass.SaveAsync();
             }
             else if (aCollider2d.name == "soldier")
             {
                 demonOrder = Order.Atack_Soldier;
-                demonOrderClass["Order"] = demonOrder.ToString();
-                demonOrderClass["Type"] = DemonType.ToString();
+                demonDataClass["Order"] = demonOrder.ToString();
+                demonDataClass["Type"] = DemonType.ToString();
                 // データストアへの登録
-                demonOrderClass.SaveAsync();
+                demonDataClass.SaveAsync();
             }
             else if (aCollider2d.name == "spirit")
             {
                 demonOrder = Order.Get_Spirit;
-                demonOrderClass["Order"] = demonOrder.ToString();
-                demonOrderClass["Type"] = DemonType.ToString();
+                demonDataClass["Order"] = demonOrder.ToString();
+                demonDataClass["Type"] = DemonType.ToString();
                 // データストアへの登録
-                demonOrderClass.SaveAsync();
+                demonDataClass.SaveAsync();
             }
         }
 
