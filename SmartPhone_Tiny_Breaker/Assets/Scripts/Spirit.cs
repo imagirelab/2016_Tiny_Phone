@@ -9,7 +9,6 @@ public class Spirit : SpiritManager
     void Start ()
     {
         id = spiritList.Count - 1;
-        Debug.Log(id);
     }
 	
 	// Update is called once per frame

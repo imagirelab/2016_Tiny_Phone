@@ -17,6 +17,8 @@ public class SpiritManager : MonoBehaviour
 
     public static bool useSpiritFlag = false;
 
+    GrowPoint spiritGrowPoint;
+
     //成長値の保存変数
     public GrowPoint growPoint;
 
@@ -39,17 +41,18 @@ public class SpiritManager : MonoBehaviour
     {
         //仮に何も設定されていなかったら空のゲームオブジェクトを入れる
         if (demon == null)
+        {
             demon = new GameObject();
+        }
         else
         {
             //悪魔の成長値を記憶する
             growPoint = demon.GetComponent<Demons>().GrowPoint;
-            growPoint.SetGrowPoint();
         }
 
         if (spiritList.Count > 0)
         {
-            GrowPoint spiritGrowPoint = spiritList[0].GetComponent<Spirit>().growPoint;
+            spiritGrowPoint = spiritList[0].GetComponent<Spirit>().growPoint;
 
             //成長値の足し方
             growPoint.CurrentHP_GrowPoint += growPoint.GetHP_GrowPoint + spiritGrowPoint.GetHP_GrowPoint;

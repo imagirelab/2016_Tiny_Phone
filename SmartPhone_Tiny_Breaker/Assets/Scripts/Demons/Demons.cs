@@ -40,7 +40,6 @@ public class Demons : Unit
         if (!changeGrowPoint)
             growPoint.SetGrowPoint();
 
-        //成長値によって今のステータスを算出する
         for (int i = 0; i < growPoint.CurrentHP_GrowPoint - growPoint.GetHP_GrowPoint; i++)
             status.CurrentHP += (int)(status.GetHP * 0.5f);
         for (int i = 0; i < growPoint.CurrentATK_GrowPoint - growPoint.GetATK_GrowPoint; i++)
@@ -69,13 +68,10 @@ public class Demons : Unit
         {
             growPoint.SetGrowPoint();
         }
-        //成長値によって今のステータスを算出する
-        for (int i = 0; i < growPoint.CurrentHP_GrowPoint - growPoint.GetHP_GrowPoint; i++)
-            status.CurrentHP += (int)(status.GetHP * 0.5f);
-        for (int i = 0; i < growPoint.CurrentATK_GrowPoint - growPoint.GetATK_GrowPoint; i++)
-            status.CurrentATK += (int)(status.GetATK * 0.5f);
-        for (int i = 0; i < growPoint.CurrentSPEED_GrowPoint - growPoint.CurrentSPEED_GrowPoint; i++)
-            status.CurrentSPEED += (int)(status.GetSPEED * 0.15f);
+
+        status.CurrentHP += (int)(status.GetHP * growPoint.CurrentHP_GrowPoint * 0.5f);       
+        status.CurrentATK += (int)(status.GetATK * growPoint.CurrentATK_GrowPoint * 0.5f);       
+        status.CurrentSPEED += (int)(status.GetSPEED * growPoint.CurrentSPEED_GrowPoint * 0.15f);
         //for (int i = 0; i < growPoint.CurrentAtackTime_GrowPoint - growPoint.CurrentAtackTime_GrowPoint; i++)
         //    status.CurrentAtackTime += (int)(status.GetAtackTime * 0.15f);
     }

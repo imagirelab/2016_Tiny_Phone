@@ -36,8 +36,8 @@ public class CharaButton : MonoBehaviour
 
     private SpriteRenderer _spriteRender;   //GetComponentを多く使うので事前に確保
 
-    // クラスのNCMBObjectを作成
-    NCMBObject demonDataClass = new NCMBObject("DemonData");        //デーモンのデータ情報
+    // クラスのNCMBObjectを作成するためのオブジェクト
+    NCMBObject demonDataClass;        //デーモンのデータ情報
 
     // Use this for initialization
     void Start()
@@ -65,10 +65,14 @@ public class CharaButton : MonoBehaviour
         //TapManagerからrunFlagを受け取っているか確認
         if (runFlag)
         {
+            Debug.Log(_DemonData.GetComponent<Demons>().GrowPoint.CurrentHP_GrowPoint);
+
+            demonDataClass = new NCMBObject("DemonData");
+
             demonDataClass["PlayerNo"] = "1";
-            demonDataClass["HP"] = _DemonData.GetComponent<Unit>().status.CurrentHP.ToString();
-            demonDataClass["ATK"] = _DemonData.GetComponent<Unit>().status.CurrentATK.ToString();
-            demonDataClass["DEX"] = _DemonData.GetComponent<Unit>().status.CurrentSPEED.ToString();
+            demonDataClass["HP"] = (_DemonData.GetComponent<Demons>().GrowPoint.CurrentHP_GrowPoint).ToString();
+            demonDataClass["ATK"] = (_DemonData.GetComponent<Demons>().GrowPoint.CurrentATK_GrowPoint).ToString();
+            demonDataClass["DEX"] = (_DemonData.GetComponent<Demons>().GrowPoint.CurrentSPEED_GrowPoint).ToString();
             demonDataClass["Order"] = "Summon";
             demonDataClass["Type"] = DemonType.ToString();
 
@@ -89,6 +93,7 @@ public class CharaButton : MonoBehaviour
         {
             if (aCollider2d.name == "castle")
             {
+                demonDataClass = new NCMBObject("DemonData");
                 demonOrder = Order.Atack_Castle;
                 demonDataClass["Order"] = demonOrder.ToString();
                 demonDataClass["Type"] = DemonType.ToString();
@@ -97,6 +102,7 @@ public class CharaButton : MonoBehaviour
             }
             else if (aCollider2d.name == "house")
             {
+                demonDataClass = new NCMBObject("DemonData");
                 demonOrder = Order.Atack_House;
                 demonDataClass["Order"] = demonOrder.ToString();
                 demonDataClass["Type"] = DemonType.ToString();
@@ -105,6 +111,7 @@ public class CharaButton : MonoBehaviour
             }
             else if (aCollider2d.name == "soldier")
             {
+                demonDataClass = new NCMBObject("DemonData");
                 demonOrder = Order.Atack_Soldier;
                 demonDataClass["Order"] = demonOrder.ToString();
                 demonDataClass["Type"] = DemonType.ToString();
@@ -113,6 +120,7 @@ public class CharaButton : MonoBehaviour
             }
             else if (aCollider2d.name == "spirit")
             {
+                demonDataClass = new NCMBObject("DemonData");
                 demonOrder = Order.Get_Spirit;
                 demonDataClass["Order"] = demonOrder.ToString();
                 demonDataClass["Type"] = DemonType.ToString();
