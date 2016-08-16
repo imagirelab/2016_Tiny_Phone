@@ -65,8 +65,6 @@ public class CharaButton : MonoBehaviour
         //TapManagerからrunFlagを受け取っているか確認
         if (runFlag)
         {
-            Debug.Log(_DemonData.GetComponent<Demons>().GrowPoint.CurrentHP_GrowPoint);
-
             demonDataClass = new NCMBObject("DemonData");
 
             demonDataClass["PlayerNo"] = "1";

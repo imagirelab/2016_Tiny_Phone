@@ -59,10 +59,6 @@ public class TapManager : MonoBehaviour
                 {
                     buttonDownObj.GetComponent<CharaButton>().runFlag = true;
                 }
-                else if (buttonUpObj.tag == "Summon" && buttonUpObj == buttonDownObj)
-                {
-                    buttonDownObj.GetComponent<Summonspirit>().runFlag = true;
-                }
                 //離した時にコマンドボタンか確認
                 else if (buttonUpObj.tag == "Command")
                 {
