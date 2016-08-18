@@ -12,11 +12,14 @@ public class Status
     private int SPEED = 0;
     [SerializeField, TooltipAttribute("攻撃間隔")]
     private float AtackTime = 0;
-    
+    [SerializeField, TooltipAttribute("コスト")]
+    private int DemonCost = 0;
+
     public int GetHP { get { return HP; } }
     public int GetATK { get { return ATK; } }
     public int GetSPEED { get { return SPEED; } }
     public float GetAtackTime { get { return AtackTime; } }
+    public int GetDemonCost { get { return DemonCost; } }
 
     //プレハブのすべて共有の値になってしまうため
     //元々のステータスはいじらないようにするため
@@ -25,6 +28,7 @@ public class Status
     private int currentATK;
     private int currentSPEED;
     private float currentAtackTime;
+    private int currentCost;
 
     public int CurrentHP
     {
@@ -46,6 +50,11 @@ public class Status
         get { return currentAtackTime; }
         set { currentAtackTime = value; }
     }
+    public int CurrentCost
+    {
+        get { return currentCost; }
+        set { currentCost = value; }
+    }
 
     Status()
     {
@@ -59,5 +68,6 @@ public class Status
         currentATK = ATK;
         currentSPEED = SPEED;
         currentAtackTime = AtackTime;
+        currentCost = DemonCost;
     }
 }

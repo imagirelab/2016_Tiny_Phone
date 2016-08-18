@@ -103,6 +103,7 @@
     <Compile Include="Assets\Scripts\Demons\GrowPoint.cs" />
     <Compile Include="Assets\Scripts\Demons\Status.cs" />
     <Compile Include="Assets\Scripts\DragObject.cs" />
+    <Compile Include="Assets\Scripts\Player\Monitor\PlayerCost.cs" />
     <Compile Include="Assets\Scripts\PowerUp.cs" />
     <Compile Include="Assets\Scripts\Spirit.cs" />
     <Compile Include="Assets\Scripts\SpiritManager.cs" />

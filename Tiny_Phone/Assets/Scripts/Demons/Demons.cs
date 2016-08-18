@@ -72,6 +72,7 @@ public class Demons : Unit
         status.CurrentHP += (int)(status.GetHP * growPoint.CurrentHP_GrowPoint * 0.5f);       
         status.CurrentATK += (int)(status.GetATK * growPoint.CurrentATK_GrowPoint * 0.5f);       
         status.CurrentSPEED += (int)(status.GetSPEED * growPoint.CurrentSPEED_GrowPoint * 0.15f);
+        status.CurrentCost += 50;                                                                   //コストの増加量は相談
         //for (int i = 0; i < growPoint.CurrentAtackTime_GrowPoint - growPoint.CurrentAtackTime_GrowPoint; i++)
         //    status.CurrentAtackTime += (int)(status.GetAtackTime * 0.15f);
     }

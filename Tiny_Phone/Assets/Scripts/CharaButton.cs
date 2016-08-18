@@ -29,6 +29,8 @@ public class CharaButton : MonoBehaviour
     public Sprite notButtonDown;            //ボタンが押されてない時のスプライト
     public Sprite ButtonDown;               //ボタンが押された時のスプライト
 
+    public PlayerCost CostData;             //プレイヤーコスト
+
     [HideInInspector]
     public bool buttonDownFlag = false;     //ボタンが押されたかのフラグを確認(呼び出しにだけ使うのでInspectorには表示しない。)
     [HideInInspector]
@@ -65,18 +67,20 @@ public class CharaButton : MonoBehaviour
         //TapManagerからrunFlagを受け取っているか確認
         if (runFlag)
         {
-            demonDataClass = new NCMBObject("DemonData");
+            if (CostData.UseableCost(_DemonData.GetComponent<Unit>().status.CurrentCost))
+            {
+                demonDataClass = new NCMBObject("DemonData");
 
-            demonDataClass["PlayerNo"] = "1";
-            demonDataClass["HP"] = (_DemonData.GetComponent<Demons>().GrowPoint.CurrentHP_GrowPoint).ToString();
-            demonDataClass["ATK"] = (_DemonData.GetComponent<Demons>().GrowPoint.CurrentATK_GrowPoint).ToString();
-            demonDataClass["DEX"] = (_DemonData.GetComponent<Demons>().GrowPoint.CurrentSPEED_GrowPoint).ToString();
-            demonDataClass["Order"] = "Summon";
-            demonDataClass["Type"] = DemonType.ToString();
+                demonDataClass["PlayerNo"] = "1";
+                demonDataClass["HP"] = (_DemonData.GetComponent<Demons>().GrowPoint.CurrentHP_GrowPoint).ToString();
+                demonDataClass["ATK"] = (_DemonData.GetComponent<Demons>().GrowPoint.CurrentATK_GrowPoint).ToString();
+                demonDataClass["DEX"] = (_DemonData.GetComponent<Demons>().GrowPoint.CurrentSPEED_GrowPoint).ToString();
+                demonDataClass["Order"] = "Summon";
+                demonDataClass["Type"] = DemonType.ToString();
 
-            // データストアへの登録
-            demonDataClass.SaveAsync();
-
+                // データストアへの登録
+                demonDataClass.SaveAsync();
+            }
             CommandInit();
             runFlag = false;       
         }

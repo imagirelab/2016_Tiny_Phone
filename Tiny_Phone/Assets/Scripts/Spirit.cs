@@ -8,7 +8,7 @@ public class Spirit : SpiritManager
     // Use this for initialization
     void Start ()
     {
-        id = spiritList.Count - 1;
+        //id = spiritList.Count - 1;
     }
 	
 	// Update is called once per frame
@@ -28,7 +28,7 @@ public class Spirit : SpiritManager
             else
             {
                 --id;
-                transform.position = new Vector3(spiritHolder.transform.position.x, spiritHolder.transform.position.y + spiritHolder.GetComponent<SpriteRenderer>().bounds.size.y / 3 - 1.5f * id, spiritHolder.transform.position.z);
+                transform.position = new Vector3(spiritHolder.transform.position.x, spiritHolder.transform.position.y + spiritHolder.GetComponent<SpriteRenderer>().bounds.size.y / 3 - spiritSpace * id, spiritHolder.transform.position.z);
 
                 if (id == spiritList.Count - 1)
                 {
