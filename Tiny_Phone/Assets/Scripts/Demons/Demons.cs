@@ -69,9 +69,23 @@ public class Demons : Unit
             growPoint.SetGrowPoint();
         }
 
-        status.CurrentHP += (int)(status.GetHP * growPoint.CurrentHP_GrowPoint * 0.5f);       
-        status.CurrentATK += (int)(status.GetATK * growPoint.CurrentATK_GrowPoint * 0.5f);       
-        status.CurrentSPEED += (int)(status.GetSPEED * growPoint.CurrentSPEED_GrowPoint * 0.15f);
+        status.CurrentHP += (int)(status.GetHP * 0.1f);       
+        status.CurrentATK += (int)(status.GetATK * 0.1f);       
+        status.CurrentSPEED += (status.GetSPEED * 0.1f);
+
+        if(status.CurrentHP > status.maxCurrentHP)
+        {
+            status.CurrentHP = status.maxCurrentHP;
+        }
+        if (status.CurrentATK > status.maxCurrentATK)
+        {
+            status.CurrentATK = status.maxCurrentATK;
+        }
+        if (status.CurrentSPEED > status.maxCurrentSPEED)
+        {
+            status.CurrentSPEED = status.maxCurrentSPEED;
+        }
+
         status.CurrentCost += 50;                                                                   //コストの増加量は相談
         //for (int i = 0; i < growPoint.CurrentAtackTime_GrowPoint - growPoint.CurrentAtackTime_GrowPoint; i++)
         //    status.CurrentAtackTime += (int)(status.GetAtackTime * 0.15f);

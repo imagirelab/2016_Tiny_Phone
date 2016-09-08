@@ -15,19 +15,21 @@ public class CharaButton : MonoBehaviour
 
     public enum Order
     {
-        Atack_Soldier,
-        Atack_House,
-        Atack_Castle,
-        Get_Spirit
+        Top,
+        Middle,
+        Bottom
     }
     [SerializeField, TooltipAttribute("種類")]
-    private Order demonOrder = Order.Atack_Castle;
+    private Order demonOrder = Order.Top;
 
+    [SerializeField, TooltipAttribute("デーモンのステータス情報が入ってるオブジェクトを選択")]
     public GameObject _DemonData;           //送信するためのオブジェクトデータ
-    public GameObject CommandObj;
+
+    //public GameObject CommandObj;
 
     public Sprite notButtonDown;            //ボタンが押されてない時のスプライト
     public Sprite ButtonDown;               //ボタンが押された時のスプライト
+
 
     public PlayerCost CostData;             //プレイヤーコスト
 
@@ -54,7 +56,7 @@ public class CharaButton : MonoBehaviour
         if (Input.GetMouseButton(0) && buttonDownFlag)
         {
             _spriteRender.sprite = ButtonDown;
-            CommandObj.SetActive(true);
+            //CommandObj.SetActive(true);
         }
 
         //ボタンが離された時の処理
@@ -76,6 +78,7 @@ public class CharaButton : MonoBehaviour
                 demonDataClass["ATK"] = (_DemonData.GetComponent<Demons>().GrowPoint.CurrentATK_GrowPoint).ToString();
                 demonDataClass["DEX"] = (_DemonData.GetComponent<Demons>().GrowPoint.CurrentSPEED_GrowPoint).ToString();
                 demonDataClass["Order"] = "Summon";
+                demonDataClass["Direction"] = demonOrder.ToString();
                 demonDataClass["Type"] = DemonType.ToString();
 
                 // データストアへの登録
@@ -93,37 +96,28 @@ public class CharaButton : MonoBehaviour
 
         if (aCollider2d)
         {
-            if (aCollider2d.name == "castle")
+            if (aCollider2d.tag == "Top")
             {
                 demonDataClass = new NCMBObject("DemonData");
-                demonOrder = Order.Atack_Castle;
+                demonOrder = Order.Top;
                 demonDataClass["Order"] = demonOrder.ToString();
                 demonDataClass["Type"] = DemonType.ToString();
                 // データストアへの登録
                 demonDataClass.SaveAsync();
             }
-            else if (aCollider2d.name == "house")
+            else if (aCollider2d.tag == "Middle")
             {
                 demonDataClass = new NCMBObject("DemonData");
-                demonOrder = Order.Atack_House;
+                demonOrder = Order.Middle;
                 demonDataClass["Order"] = demonOrder.ToString();
                 demonDataClass["Type"] = DemonType.ToString();
                 // データストアへの登録
                 demonDataClass.SaveAsync();
             }
-            else if (aCollider2d.name == "soldier")
+            else if (aCollider2d.tag == "Bottom")
             {
                 demonDataClass = new NCMBObject("DemonData");
-                demonOrder = Order.Atack_Soldier;
-                demonDataClass["Order"] = demonOrder.ToString();
-                demonDataClass["Type"] = DemonType.ToString();
-                // データストアへの登録
-                demonDataClass.SaveAsync();
-            }
-            else if (aCollider2d.name == "spirit")
-            {
-                demonDataClass = new NCMBObject("DemonData");
-                demonOrder = Order.Get_Spirit;
+                demonOrder = Order.Bottom;
                 demonDataClass["Order"] = demonOrder.ToString();
                 demonDataClass["Type"] = DemonType.ToString();
                 // データストアへの登録
@@ -136,6 +130,6 @@ public class CharaButton : MonoBehaviour
 
     public void CommandInit()
     {
-        CommandObj.SetActive(false);
+        //CommandObj.SetActive(false);
     }
 }
