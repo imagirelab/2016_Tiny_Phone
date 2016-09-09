@@ -29,8 +29,6 @@ public class StatusBar : MonoBehaviour
         if (statusType == StatusType.HP)
         {
             this.transform.localScale = new Vector3(_statusData.CurrentHP / _statusData.maxCurrentHP, 1.0f, 1.0f);
-            Debug.Log(_statusData.CurrentHP);
-            Debug.Log(_statusData.maxCurrentHP);
         }
         if (statusType == StatusType.ATACK)
         {

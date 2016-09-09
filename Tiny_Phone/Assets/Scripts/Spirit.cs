@@ -28,13 +28,13 @@ public class Spirit : SpiritManager
             else
             {
                 --id;
-                transform.position = new Vector3(spiritHolder.transform.position.x, spiritHolder.transform.position.y + spiritHolder.GetComponent<SpriteRenderer>().bounds.size.y / 3 - spiritSpace * id, spiritHolder.transform.position.z);
+                //transform.position = new Vector3(SummonPos.transform.position.x, SummonPos.transform.position.y, 0);
 
                 if (id == spiritList.Count - 1)
                 {
                     useSpiritFlag = false;
                 }
-            }            
+            }          
         }
     }
 }

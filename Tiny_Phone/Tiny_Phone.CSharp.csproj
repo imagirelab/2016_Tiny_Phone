@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\DEBUG.cs" />
     <Compile Include="Assets\NCMB\NCMBManager.cs" />
     <Compile Include="Assets\NCMB\NCMBSettings.cs" />
     <Compile Include="Assets\NCMB\Script\CommonConstant.cs" />
@@ -103,6 +104,8 @@
     <Compile Include="Assets\Scripts\Demons\GrowPoint.cs" />
     <Compile Include="Assets\Scripts\Demons\Status.cs" />
     <Compile Include="Assets\Scripts\DragObject.cs" />
+    <Compile Include="Assets\Scripts\Matching\Matching.cs" />
+    <Compile Include="Assets\Scripts\Matching\Rotaring.cs" />
     <Compile Include="Assets\Scripts\Player\Monitor\PlayerCost.cs" />
     <Compile Include="Assets\Scripts\PowerUp.cs" />
     <Compile Include="Assets\Scripts\Spirit.cs" />
