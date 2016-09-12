@@ -6,7 +6,7 @@ using NCMB;
 public class Matching : MonoBehaviour
 {
     [TooltipAttribute("受信フレームカウント")]
-    public int ReceiveCountflame = 60;
+    public int ReceiveCountflame = 300;
 
     private int flameCount = 0;
 
@@ -14,9 +14,9 @@ public class Matching : MonoBehaviour
 
     private bool Player1okFlag;
     private bool Player2okFlag;
+    private bool sortokFlag;
 
-    private NCMBObject matchingObj = new NCMBObject("PlayerData");
-
+    private NCMBObject matchingObj;
 
     // Use this for initialization
     void Start ()
@@ -25,13 +25,7 @@ public class Matching : MonoBehaviour
         latestNo = 0;
         Player1okFlag = false;
         Player2okFlag = false;
-
-        Sort();
-
-        matchingObj["PlayerNo"] = (latestNo + 1).ToString();
-        matchingObj["Mode"] = "matching";
-
-        matchingObj.SaveAsync();
+        sortokFlag = false;
     }
 	
 	// Update is called once per frame
@@ -39,14 +33,30 @@ public class Matching : MonoBehaviour
     {
         flameCount++;
 
-        if(flameCount > ReceiveCountflame)
+        if(sortokFlag)
         {
-            Recieve();
+            matchingObj = new NCMBObject("PlayerData");
+
+            matchingObj["PlayerNo"] = (latestNo).ToString();
+            matchingObj["Mode"] = "matching";
+
+            matchingObj.SaveAsync();
+            sortokFlag = false;
         }
 
-        if(Player1okFlag && Player2okFlag)
+        if(flameCount > ReceiveCountflame)
         {
-            Application.LoadLevel(1);
+            if (latestNo == 0)
+            {
+                Sort();
+            }
+            Recieve();
+            flameCount = 0;
+        }
+
+        if(Player1okFlag && Player2okFlag && latestNo <= 2)
+        {
+            Application.LoadLevel("main");
         }
     }
 
@@ -54,8 +64,6 @@ public class Matching : MonoBehaviour
     {
         //クエリを作成
         NCMBQuery<NCMBObject> playerQuery = new NCMBQuery<NCMBObject>("PlayerData");
-
-        playerQuery.WhereNotEqualTo("Mode", 10);
 
         //検索
         playerQuery.FindAsync((List<NCMBObject> objList, NCMBException e) =>
@@ -74,12 +82,14 @@ public class Matching : MonoBehaviour
                     if(ncmbObj["PlayerNo"].ToString() == "1" && ncmbObj["Mode"].ToString() == "matching")
                     {
                         Player1okFlag = true;
-                        ncmbObj.DeleteAsync();
                     }
                     else if(ncmbObj["PlayerNo"].ToString() == "2" && ncmbObj["Mode"].ToString() == "matching")
                     {
                         Player2okFlag = true;
-                        ncmbObj.DeleteAsync();
+                    }
+                    else if(ncmbObj["PlayerNo"].ToString() == "0")
+                    {
+
                     }
                     else
                     {
@@ -104,7 +114,10 @@ public class Matching : MonoBehaviour
             //検索失敗時
             if (e != null)
             {
-                latestNo = 0;
+                latestNo = 1;
+                Debug.Log(e.ToString());
+                sortokFlag = true;
+                return;
             }
             else
             {
@@ -112,6 +125,8 @@ public class Matching : MonoBehaviour
                 foreach (NCMBObject ncmbObj in objList)
                 {
                     latestNo = System.Convert.ToInt32(ncmbObj["PlayerNo"].ToString());
+                    latestNo += 1;
+                    sortokFlag = true;
                 }
             }
         });
