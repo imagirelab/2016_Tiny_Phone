@@ -48,9 +48,14 @@ public class Matching : MonoBehaviour
         {
             if (latestNo == 0)
             {
+                Debug.Log("SortCall");
                 Sort();
             }
-            Recieve();
+            else
+            {
+                Debug.Log("RecieveCall");
+                Recieve();
+            }
             flameCount = 0;
         }
 
@@ -79,11 +84,11 @@ public class Matching : MonoBehaviour
                 //リストにある数だけ回す
                 foreach (NCMBObject ncmbObj in objList)
                 {
-                    if(ncmbObj["PlayerNo"].ToString() == "1" && ncmbObj["Mode"].ToString() == "matching")
+                    if(ncmbObj["PlayerNo"].ToString() == "1" && (ncmbObj["Mode"].ToString() == "matching" || ncmbObj["Mode"].ToString() == "PCOK"))
                     {
                         Player1okFlag = true;
                     }
-                    else if(ncmbObj["PlayerNo"].ToString() == "2" && ncmbObj["Mode"].ToString() == "matching")
+                    else if(ncmbObj["PlayerNo"].ToString() == "2" && (ncmbObj["Mode"].ToString() == "matching" || ncmbObj["Mode"].ToString() == "PCOK"))
                     {
                         Player2okFlag = true;
                     }
@@ -114,21 +119,39 @@ public class Matching : MonoBehaviour
             //検索失敗時
             if (e != null)
             {
-                latestNo = 1;
                 Debug.Log(e.ToString());
-                sortokFlag = true;
                 return;
             }
             else
             {
-                //リストにある数だけ回す
-                foreach (NCMBObject ncmbObj in objList)
+                if (objList.Count > 0)
                 {
-                    latestNo = System.Convert.ToInt32(ncmbObj["PlayerNo"].ToString());
-                    latestNo += 1;
+                    //リストにある数だけ回す
+                    foreach (NCMBObject ncmbObj in objList)
+                    {
+                        latestNo = System.Convert.ToInt32(ncmbObj["PlayerNo"].ToString());
+                        latestNo += 1;
+                        sortokFlag = true;
+                    }
+                }
+                else
+                {
+                    latestNo = 1;
                     sortokFlag = true;
                 }
             }
         });
+    }
+
+    void OnDisable()
+    {
+        if(matchingObj != null)
+            matchingObj.DeleteAsync();
+    }
+
+    private void OnApplicationQuit()
+    {
+        if (matchingObj != null)
+            matchingObj.DeleteAsync();
     }
 }

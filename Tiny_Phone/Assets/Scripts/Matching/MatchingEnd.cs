@@ -51,6 +51,7 @@ public class MatchingEnd : MonoBehaviour
                 {
                     if (ncmbObj["PlayerNo"].ToString() == "0")
                     {
+
                     }
                     else
                     {
