@@ -32,7 +32,7 @@ public class PlayerCost : MonoBehaviour {
     {
         currentCost = StateCost;
         _text = this.GetComponent<TextMesh>();
-        _text.text = "COST: " + currentCost;
+        _text.text = "COST: " + currentCost + "/" + MaxCost;
     }
 	
 	void Update () {
@@ -48,7 +48,7 @@ public class PlayerCost : MonoBehaviour {
         //1フレームあたりの時間を取得
         time += Time.deltaTime;
 
-        _text.text = "COST: " + currentCost;
+        _text.text = "COST: " + currentCost + "/" + MaxCost;
     }
 
     //コストを足す

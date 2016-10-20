@@ -37,7 +37,7 @@ public class Matching : MonoBehaviour
         {
             matchingObj = new NCMBObject("PlayerData");
 
-            matchingObj["PlayerNo"] = (latestNo).ToString();
+            matchingObj["PlayerNo"] = (StaticVariables.PlayerNo).ToString();
             matchingObj["Mode"] = "matching";
 
             matchingObj.SaveAsync();
@@ -46,7 +46,7 @@ public class Matching : MonoBehaviour
 
         if(flameCount > ReceiveCountflame)
         {
-            if (latestNo == 0)
+            if (StaticVariables.PlayerNo == 0)
             {
                 Debug.Log("SortCall");
                 Sort();
@@ -59,7 +59,7 @@ public class Matching : MonoBehaviour
             flameCount = 0;
         }
 
-        if(Player1okFlag && Player2okFlag && latestNo <= 2)
+        if(Player1okFlag && Player2okFlag && StaticVariables.PlayerNo <= 2)
         {
             Application.LoadLevel("main");
         }
@@ -84,21 +84,14 @@ public class Matching : MonoBehaviour
                 //リストにある数だけ回す
                 foreach (NCMBObject ncmbObj in objList)
                 {
-                    if(ncmbObj["PlayerNo"].ToString() == "1" && (ncmbObj["Mode"].ToString() == "matching" || ncmbObj["Mode"].ToString() == "PCOK"))
+                    if(ncmbObj["PlayerNo"].ToString() == "1" && ncmbObj["Mode"].ToString() == "PCOK")
                     {
                         Player1okFlag = true;
                     }
-                    else if(ncmbObj["PlayerNo"].ToString() == "2" && (ncmbObj["Mode"].ToString() == "matching" || ncmbObj["Mode"].ToString() == "PCOK"))
+
+                    if(ncmbObj["PlayerNo"].ToString() == "2" && ncmbObj["Mode"].ToString() == "PCOK")
                     {
                         Player2okFlag = true;
-                    }
-                    else if(ncmbObj["PlayerNo"].ToString() == "0")
-                    {
-
-                    }
-                    else
-                    {
-                        ncmbObj.DeleteAsync();
                     }
                 }                
             }
@@ -129,14 +122,14 @@ public class Matching : MonoBehaviour
                     //リストにある数だけ回す
                     foreach (NCMBObject ncmbObj in objList)
                     {
-                        latestNo = System.Convert.ToInt32(ncmbObj["PlayerNo"].ToString());
-                        latestNo += 1;
+                        StaticVariables.PlayerNo = System.Convert.ToInt32(ncmbObj["PlayerNo"].ToString());
+                        StaticVariables.PlayerNo += 1;
                         sortokFlag = true;
                     }
                 }
                 else
                 {
-                    latestNo = 1;
+                    StaticVariables.PlayerNo = 1;
                     sortokFlag = true;
                 }
             }
