@@ -35,7 +35,7 @@ public class Demons : Unit
     void Start ()
     {
         //初期ステータス(プロパティからの設定情報)
-        status.SetStutas();
+        status.SetStatus();
         //外部からの変更がなかった場合初期の成長値を設定する
         if (!changeGrowPoint)
             growPoint.SetGrowPoint();

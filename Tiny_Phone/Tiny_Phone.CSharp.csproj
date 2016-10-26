@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -103,12 +97,23 @@
     <Compile Include="Assets\NCMB\Script\NCMBUtility.cs" />
     <Compile Include="Assets\NCMB\Script\NamespaceDoc.cs" />
     <Compile Include="Assets\NCMB\Script\Platform.cs" />
+    <Compile Include="Assets\Scripts\DataBase\BuildingDataBase.cs" />
+    <Compile Include="Assets\Scripts\DataBase\DemonDataBase.cs" />
+    <Compile Include="Assets\Scripts\DataBase\SolgierDataBase.cs" />
+    <Compile Include="Assets\Scripts\DataBase\SpiritDataBase.cs" />
     <Compile Include="Assets\Scripts\DebugButton.cs" />
     <Compile Include="Assets\Scripts\DebugText.cs" />
     <Compile Include="Assets\Scripts\Demons\Demons.cs" />
     <Compile Include="Assets\Scripts\Demons\DemonsAttack.cs" />
     <Compile Include="Assets\Scripts\Demons\GrowPoint.cs" />
     <Compile Include="Assets\Scripts\Demons\Status.cs" />
+    <Compile Include="Assets\Scripts\GameRule.cs" />
+    <Compile Include="Assets\Scripts\LoadData\CostData.cs" />
+    <Compile Include="Assets\Scripts\LoadData\DataLode.cs" />
+    <Compile Include="Assets\Scripts\LoadData\GrowData.cs" />
+    <Compile Include="Assets\Scripts\LoadData\HutData.cs" />
+    <Compile Include="Assets\Scripts\LoadData\LoadManager.cs" />
+    <Compile Include="Assets\Scripts\LoadData\ParamData.cs" />
     <Compile Include="Assets\Scripts\Main\CharaButton.cs" />
     <Compile Include="Assets\Scripts\Main\DragObject.cs" />
     <Compile Include="Assets\Scripts\Main\PowerUp.cs" />

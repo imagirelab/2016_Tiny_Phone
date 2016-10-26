@@ -12,6 +12,8 @@ public class Unit : MonoBehaviour {
     public bool IsAttack;           //攻撃中フラグ
     [HideInInspector]
     public GameObject attackTarget; //攻撃目標
+    [SerializeField]
+    public float ATKRange = 10.0f;
 
     protected void Move()
     {

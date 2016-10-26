@@ -108,11 +108,11 @@ public class Status
 
     Status()
     {
-        SetStutas();
+        SetStatus();
     }
 
     //現在のステータスに代入する
-    public void SetStutas()
+    public void SetStatus()
     {
         currentHP = HP;
         currentATK = ATK;
@@ -125,5 +125,16 @@ public class Status
         maxcurrentSPEED = maxSPEED;
         maxcurrentAtackTime = maxAtackTime;
         maxcurrentCost = maxDemonCost;
+    }
+
+    //基準を変えたいときに呼び出す
+    public void SetDefault(int hp, int atk, float speed, float atkspeed)
+    {
+        HP = hp;
+        ATK = atk;
+        SPEED = speed;
+        AtackTime = atkspeed;
+
+        SetStatus();
     }
 }
