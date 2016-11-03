@@ -28,11 +28,11 @@ public class StatusBar : MonoBehaviour
     {
         if (statusType == StatusType.HP)
         {
-            this.transform.localScale = new Vector3(_statusData.CurrentHP / _statusData.maxCurrentHP, 1.0f, 1.0f);
+            this.transform.localScale = new Vector3((float)_statusData.CurrentHP / (float)_statusData.maxCurrentHP, 1.0f, 1.0f);
         }
         if (statusType == StatusType.ATACK)
         {
-            this.transform.localScale = new Vector3(_statusData.CurrentATK / _statusData.maxCurrentATK, 1, 1);
+            this.transform.localScale = new Vector3((float)_statusData.CurrentATK / (float)_statusData.maxCurrentATK, 1, 1);
         }
         if (statusType == StatusType.SPEED)
         {

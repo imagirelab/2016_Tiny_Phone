@@ -26,9 +26,6 @@ public class SpiritManager : MonoBehaviour
 
     public float spiritSpace = 1.5f;
 
-    //成長値の保存変数
-    public GrowPoint growPoint;
-
     //フレーム数のカウント数える用
     private int flamecounter;
 

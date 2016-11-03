@@ -5,13 +5,13 @@
 public class Status
 {
     [SerializeField, TooltipAttribute("体力")]
-    private float HP = 0;
+    private int HP = 0;
     [SerializeField, TooltipAttribute("最大体力")]
-    private float maxHP = 0;
+    private int maxHP = 0;
     [SerializeField, TooltipAttribute("攻撃力")]
-    private float ATK = 0;
+    private int ATK = 0;
     [SerializeField, TooltipAttribute("最大攻撃力")]
-    private float maxATK = 0;
+    private int maxATK = 0;
     [SerializeField, TooltipAttribute("速度")]
     private float SPEED = 0;
     [SerializeField, TooltipAttribute("最大速度")]

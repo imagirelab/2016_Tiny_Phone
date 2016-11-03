@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PowerUp : SpiritManager
+public class PowerUp : MonoBehaviour
 { 
     public Sprite notButtonDown;            //ボタンが押されてない時のスプライト
     public Sprite ButtonDown;               //ボタンが押された時のスプライト
@@ -17,6 +17,11 @@ public class PowerUp : SpiritManager
 
     GrowPoint spiritGrowPoint;              //仮保存するための成長値置物
 
+    //成長値の保存変数
+    public GrowPoint growPoint;
+
+    public GameObject CommandObj;           //コマンドボタン出現させるため
+
     // Use this for initialization
     void Start ()
     {
@@ -30,6 +35,7 @@ public class PowerUp : SpiritManager
         if (Input.GetMouseButton(0) && buttonDownFlag)
         {
             _spriteRender.sprite = ButtonDown;
+            CommandObj.SetActive(true);
         }
 
         //ボタンが離された時の処理
@@ -44,7 +50,7 @@ public class PowerUp : SpiritManager
         {
             useSpirit();
 
-            if (useSpiritFlag)
+            if (SpiritManager.useSpiritFlag)
             {
                 //ボタンのゲームオブジェクトの名前から参照("名前をしっかり整えること")
                 if (this.gameObject.name.ToString().Contains("pupu"))
@@ -60,7 +66,7 @@ public class PowerUp : SpiritManager
                     Debug.Log("ピピは魂を吸収して強化した");
                 }
             }
-
+            CommandObj.SetActive(false);
             runFlag = false;
         }
     }
@@ -78,23 +84,19 @@ public class PowerUp : SpiritManager
             growPoint = demon.GetComponent<Demons>().GrowPoint;
         }
 
-        if (spiritList.Count > 0)
+        //仮として次のレベル分の魂を要求される。
+        if (SpiritManager.spiritList.Count > growPoint.CurrentSpiritLevel + 1)
         {
-            spiritGrowPoint = spiritList[0].GetComponent<Spirit>().growPoint;
-
             //成長値の足し方
-            growPoint.CurrentHP_GrowPoint += growPoint.GetHP_GrowPoint + spiritGrowPoint.GetHP_GrowPoint;
-            growPoint.CurrentATK_GrowPoint += growPoint.GetATK_GrowPoint + spiritGrowPoint.GetATK_GrowPoint;
-            growPoint.CurrentSPEED_GrowPoint += growPoint.GetSPEED_GrowPoint + spiritGrowPoint.GetSPEED_GrowPoint;
-            growPoint.CurrentAtackTime_GrowPoint += growPoint.GetAtackTime_GrowPoint + spiritGrowPoint.GetAtackTime_GrowPoint;
+            growPoint.CurrentSpiritLevel += 1;
 
             demon.GetComponent<Demons>().GrowPoint = growPoint;
 
             demon.GetComponent<Demons>().powerUp();
 
-            useSpiritFlag = true;
+            SpiritManager.useSpiritFlag = true;
 
-            spiritList.RemoveAt(0);
+            SpiritManager.spiritList.RemoveAt(0);
         }
     }
 

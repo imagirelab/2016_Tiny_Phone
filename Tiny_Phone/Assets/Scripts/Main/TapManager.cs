@@ -62,7 +62,7 @@ public class TapManager : MonoBehaviour
                 //離した時にコマンドボタンか確認
                 else if (buttonUpObj.tag == "Command")
                 {
-                    buttonDownObj.GetComponent<CharaButton>().CommandCheck();
+                    buttonUpObj.GetComponent<CharaButton>().CommandCheck();
                 }
             }
         }

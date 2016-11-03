@@ -27,7 +27,7 @@ public class CharaButton : MonoBehaviour
 
     private Demons growpointData;
 
-    //public GameObject CommandObj;
+    public GameObject CommandObj;
 
     public Sprite notButtonDown;            //ボタンが押されてない時のスプライト
     public Sprite ButtonDown;               //ボタンが押された時のスプライト
@@ -59,7 +59,6 @@ public class CharaButton : MonoBehaviour
         if (Input.GetMouseButton(0) && buttonDownFlag)
         {
             _spriteRender.sprite = ButtonDown;
-            //CommandObj.SetActive(true);
         }
 
         //ボタンが離された時の処理
@@ -72,28 +71,7 @@ public class CharaButton : MonoBehaviour
         //TapManagerからrunFlagを受け取っているか確認
         if (runFlag)
         {
-            if ((StaticVariables.PlayerNo == 1 || StaticVariables.PlayerNo == 2))
-            {
-                if (CostData.UseableCost(_DemonData.GetComponent<Unit>().status.CurrentCost))
-                {
-                    demonDataClass = new NCMBObject("DemonData");
-
-                    demonDataClass["PlayerNo"] = StaticVariables.PlayerNo;
-                    demonDataClass["HP"] = (_DemonData.GetComponent<Demons>().GrowPoint.CurrentHP_GrowPoint).ToString();
-                    demonDataClass["ATK"] = (_DemonData.GetComponent<Demons>().GrowPoint.CurrentATK_GrowPoint).ToString();
-                    demonDataClass["SPEED"] = (_DemonData.GetComponent<Demons>().GrowPoint.CurrentSPEED_GrowPoint).ToString();
-                    demonDataClass["SpiritLevel"] = System.Convert.ToInt32(growpointData.GrowPoint.CurrentHP_GrowPoint.ToString())
-                                                  + System.Convert.ToInt32(growpointData.GrowPoint.CurrentATK_GrowPoint.ToString())
-                                                  + System.Convert.ToInt32(growpointData.GrowPoint.CurrentSPEED_GrowPoint.ToString());
-                    demonDataClass["Order"] = "Summon";
-                    demonDataClass["Direction"] = demonOrder.ToString();
-                    demonDataClass["Type"] = DemonType.ToString();
-
-                    // データストアへの登録
-                    demonDataClass.SaveAsync();
-                }
-            }
-            CommandInit();
+            Summon();
             runFlag = false;       
         }
     }
@@ -105,40 +83,40 @@ public class CharaButton : MonoBehaviour
 
         if (aCollider2d)
         {
-            if (aCollider2d.tag == "Top")
-            {
-                demonDataClass = new NCMBObject("DemonData");
-                demonOrder = Order.Top;
-                demonDataClass["Order"] = demonOrder.ToString();
-                demonDataClass["Type"] = DemonType.ToString();
-                // データストアへの登録
-                demonDataClass.SaveAsync();
+            if (this.demonOrder == Order.Top)
+            {                
+                Summon();
             }
-            else if (aCollider2d.tag == "Middle")
+            else if (this.demonOrder == Order.Middle)
             {
-                demonDataClass = new NCMBObject("DemonData");
-                demonOrder = Order.Middle;
-                demonDataClass["Order"] = demonOrder.ToString();
-                demonDataClass["Type"] = DemonType.ToString();
-                // データストアへの登録
-                demonDataClass.SaveAsync();
+                Summon();
             }
-            else if (aCollider2d.tag == "Bottom")
+            else if (this.demonOrder == Order.Bottom)
+            {
+                Summon();
+            }
+        }
+
+        CommandObj.SetActive(false);
+    }
+
+    public void Summon()
+    {
+        if ((StaticVariables.PlayerNo == 1 || StaticVariables.PlayerNo == 2))
+        {
+            if (CostData.UseableCost(_DemonData.GetComponent<Unit>().status.CurrentCost))
             {
                 demonDataClass = new NCMBObject("DemonData");
-                demonOrder = Order.Bottom;
-                demonDataClass["Order"] = demonOrder.ToString();
+
+                demonDataClass["PlayerNo"] = StaticVariables.PlayerNo;
+                demonDataClass["SpiritLevel"] = System.Convert.ToInt32(growpointData.GrowPoint.CurrentSpiritLevel.ToString());
+                demonDataClass["Order"] = "Summon";
+                demonDataClass["Direction"] = demonOrder.ToString();
                 demonDataClass["Type"] = DemonType.ToString();
+
                 // データストアへの登録
                 demonDataClass.SaveAsync();
             }
         }
-
-        CommandInit();
-    }
-
-    public void CommandInit()
-    {
-        //CommandObj.SetActive(false);
     }
 }
