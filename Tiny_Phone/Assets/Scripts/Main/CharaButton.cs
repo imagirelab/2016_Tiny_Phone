@@ -45,6 +45,9 @@ public class CharaButton : MonoBehaviour
     // クラスのNCMBObjectを作成するためのオブジェクト
     NCMBObject demonDataClass;        //デーモンのデータ情報
 
+    public float cooltime = 0.5f;
+    private float timer = 0;
+
     // Use this for initialization
     void Start()
     {
@@ -55,6 +58,8 @@ public class CharaButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timer += Time.deltaTime;
+
         //ボタンが押されている時の処理
         if (Input.GetMouseButton(0) && buttonDownFlag)
         {
@@ -81,7 +86,7 @@ public class CharaButton : MonoBehaviour
         Vector3 aTapPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Collider2D aCollider2d = Physics2D.OverlapPoint(aTapPoint);
 
-        if (aCollider2d)
+        if (aCollider2d && timer > cooltime)
         {
             if (this.demonOrder == Order.Top)
             {                
@@ -95,6 +100,8 @@ public class CharaButton : MonoBehaviour
             {
                 Summon();
             }
+
+            timer = 0;
         }
 
         CommandObj.SetActive(false);
@@ -108,9 +115,8 @@ public class CharaButton : MonoBehaviour
             {
                 demonDataClass = new NCMBObject("DemonData");
 
-                demonDataClass["PlayerNo"] = StaticVariables.PlayerNo;
-                demonDataClass["SpiritLevel"] = System.Convert.ToInt32(growpointData.GrowPoint.CurrentSpiritLevel.ToString());
-                demonDataClass["Order"] = "Summon";
+                demonDataClass["PlayerNo"] = StaticVariables.PlayerNo - 1;
+                demonDataClass["Level"] = System.Convert.ToInt32(growpointData.GrowPoint.CurrentSpiritLevel.ToString());
                 demonDataClass["Direction"] = demonOrder.ToString();
                 demonDataClass["Type"] = DemonType.ToString();
 

@@ -52,20 +52,9 @@ public class PowerUp : MonoBehaviour
 
             if (SpiritManager.useSpiritFlag)
             {
-                //ボタンのゲームオブジェクトの名前から参照("名前をしっかり整えること")
-                if (this.gameObject.name.ToString().Contains("pupu"))
-                {
-                    Debug.Log("ププは魂を吸収して強化した");
-                }
-                else if (this.gameObject.name.ToString().Contains("popo"))
-                {
-                    Debug.Log("ポポは魂を吸収して強化した");
-                }
-                else if (this.gameObject.name.ToString().Contains("pipi"))
-                { 
-                    Debug.Log("ピピは魂を吸収して強化した");
-                }
+                Debug.Log("魂を使って強化した");
             }
+
             CommandObj.SetActive(false);
             runFlag = false;
         }
@@ -85,7 +74,7 @@ public class PowerUp : MonoBehaviour
         }
 
         //仮として次のレベル分の魂を要求される。
-        if (SpiritManager.spiritList.Count > growPoint.CurrentSpiritLevel + 1)
+        if (SpiritManager.spiritList.Count >= 1)
         {
             //成長値の足し方
             growPoint.CurrentSpiritLevel += 1;
@@ -96,7 +85,10 @@ public class PowerUp : MonoBehaviour
 
             SpiritManager.useSpiritFlag = true;
 
-            SpiritManager.spiritList.RemoveAt(0);
+            for (int i = 0; i < 1; i++)
+            {
+                SpiritManager.spiritList.RemoveAt(i);
+            }
         }
     }
 

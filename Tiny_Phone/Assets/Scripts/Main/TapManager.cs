@@ -6,9 +6,13 @@ public class TapManager : MonoBehaviour
     private GameObject buttonDownObj;     //仮の置物
     private GameObject buttonUpObj;       //仮の置物
 
+    [HideInInspector]
+    public static bool notUpClick = false;
+
     // Use this for initialization
     void Start()
     {
+        notUpClick = false;
     }
 
     // Update is called once per frame
@@ -63,6 +67,17 @@ public class TapManager : MonoBehaviour
                 else if (buttonUpObj.tag == "Command")
                 {
                     buttonUpObj.GetComponent<CharaButton>().CommandCheck();
+                }
+                else
+                {
+                    buttonDownObj.transform.GetChild(0).gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                if(buttonDownObj.tag == "PowerUp")
+                {
+                    buttonDownObj.transform.GetChild(0).gameObject.SetActive(false);
                 }
             }
         }

@@ -30,7 +30,7 @@ public class Deadly : MonoBehaviour
         if (aCollider2d)
         {
             //ボタンが押されている時の処理
-            if (Input.GetMouseButtonDown(0) && SpiritManager.spiritList.Count >= deadlyCost)
+            if (Input.GetMouseButtonDown(0) && SpiritManager.spiritList.Count >= deadlyCost && aCollider2d.name == this.gameObject.name)
             {
                 SpiritManager.useSpiritFlag = true;
 
@@ -42,7 +42,7 @@ public class Deadly : MonoBehaviour
                 //データ送信
                 deadlyRequest = new NCMBObject("DeadlyData");
 
-                deadlyRequest["PlayerNo"] = StaticVariables.PlayerNo;
+                deadlyRequest["PlayerNo"] = StaticVariables.PlayerNo - 1;
                 deadlyRequest["Type"] = myType.ToString();
 
                 //データストアに登録

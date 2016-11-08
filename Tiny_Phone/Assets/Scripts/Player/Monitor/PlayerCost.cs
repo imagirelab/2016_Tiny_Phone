@@ -74,9 +74,9 @@ public class PlayerCost : MonoBehaviour {
     public bool UseableCost(int cost)
     {
 
-        if (currentCost - cost >= 0)
+        if (currentCost - (cost + DemonCost) >= 0)
         {
-            currentCost -= cost;
+            currentCost -= (cost + DemonCost);
             
             return true;
         }

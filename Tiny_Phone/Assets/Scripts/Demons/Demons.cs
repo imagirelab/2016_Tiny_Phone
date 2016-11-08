@@ -41,17 +41,6 @@ public class Demons : Unit
             growPoint.SetGrowPoint();
     }
 
-    //破壊されたときにリストから外す
-    void OnDisable()
-    {
-         
-    }
-
-    void Update ()
-    {
-        
-    }
-
     public void powerUp()
     {
         //外部からの変更がなかった場合初期の成長値を設定する

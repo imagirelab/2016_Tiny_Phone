@@ -68,8 +68,6 @@ public class SpiritManager : MonoBehaviour
         //クエリを作成
         NCMBQuery<NCMBObject> demonQuery = new NCMBQuery<NCMBObject>("SpiritData");
 
-        demonQuery.WhereContainedIn("PlayerNo" ,StaticVariables.PlayerNo.ToString());
-
         //検索
         demonQuery.FindAsync((List<NCMBObject> objList, NCMBException e) =>
         {
@@ -84,27 +82,31 @@ public class SpiritManager : MonoBehaviour
                 //リストにある数だけ回す
                 foreach (NCMBObject ncmbObj in objList)
                 {
-                    //召喚をほぼ同時に行わせないようにタイムラグを発生させる
-                    if (summonCounter > SummonLag)
-                    {
-                        switch (ncmbObj["TYPE"].ToString())
-                        {
-                            case "POPO":
-                                SummonSpirit(POPOspirit);
-                                break;
-                            case "PUPU":
-                                SummonSpirit(PUPUspirit);
-                                break;
-                            case "PIPI":
-                                SummonSpirit(PIPIspirit);
-                                break;
-                            default:
-                                Debug.Log("Player.cs Receive() ncmbObj[Type] Exception");
-                                break;
-                        }
 
-                        //記録を取ったら消す
-                        ncmbObj.DeleteAsync();
+                    if (ncmbObj["PlayerNo"].ToString() == (StaticVariables.PlayerNo - 1).ToString())
+                    {
+                        //召喚をほぼ同時に行わせないようにタイムラグを発生させる
+                        if (summonCounter > SummonLag)
+                        {
+                            switch (ncmbObj["TYPE"].ToString())
+                            {
+                                case "POPO":
+                                    SummonSpirit(POPOspirit);
+                                    break;
+                                case "PUPU":
+                                    SummonSpirit(PUPUspirit);
+                                    break;
+                                case "PIPI":
+                                    SummonSpirit(PIPIspirit);
+                                    break;
+                                default:
+                                    Debug.Log("Player.cs Receive() ncmbObj[Type] Exception");
+                                    break;
+                            }
+
+                            //記録を取ったら消す
+                            ncmbObj.DeleteAsync();
+                        }
                     }
                 }
             }
@@ -118,7 +120,7 @@ public class SpiritManager : MonoBehaviour
         {
                 spiritList.Add(spirit);
                 spirit.GetComponent<Spirit>().id = spiritList.Count - 1;
-                spiritList[spiritList.Count - 1].transform.position = new Vector3(SummonPos.transform.position.x, SummonPos.transform.position.y, 0);
+                spiritList[spiritList.Count - 1].transform.position = new Vector3(SummonPos.transform.position.x + Random.Range(-0.5f , 0.5f), SummonPos.transform.position.y, 0);
                 Instantiate(spiritList[spiritList.Count - 1]);
                 summonCounter = 0;
         }
