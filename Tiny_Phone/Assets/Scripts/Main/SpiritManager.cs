@@ -118,11 +118,17 @@ public class SpiritManager : MonoBehaviour
         //21体以上同時受信した時に弾くために
         if (spiritList.Count < SpiritLimit)
         {
-                spiritList.Add(spirit);
-                spirit.GetComponent<Spirit>().id = spiritList.Count - 1;
-                spiritList[spiritList.Count - 1].transform.position = new Vector3(SummonPos.transform.position.x + Random.Range(-0.5f , 0.5f), SummonPos.transform.position.y, 0);
-                Instantiate(spiritList[spiritList.Count - 1]);
-                summonCounter = 0;
+            spiritList.Add(spirit);
+            spiritList[spiritList.Count - 1].GetComponent<Spirit>().id = spiritList.Count - 1;
+            spiritList[spiritList.Count - 1].GetComponent<Spirit>().usedFlag = false;
+            spiritList[spiritList.Count - 1].transform.position = new Vector3(SummonPos.transform.position.x + Random.Range(-0.5f , 0.5f), SummonPos.transform.position.y, 0);
+            Instantiate(spiritList[spiritList.Count - 1]);
+            summonCounter = 0;
+            for (int i = 0; i < spiritList.Count; i++)
+            {
+                Debug.Log("<color=green>ID</color>" + i + "\n<color=green>ID</color>" + spiritList[spiritList.Count - 1].GetComponent<Spirit>().id);
+                Debug.Log("<color=red>ID</color>" + i + "\n<color=red>Flag</color>" + spiritList[spiritList.Count - 1].GetComponent<Spirit>().usedFlag);
+            }
         }
     }
 }

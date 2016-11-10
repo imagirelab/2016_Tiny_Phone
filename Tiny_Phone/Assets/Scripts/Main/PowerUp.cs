@@ -22,6 +22,8 @@ public class PowerUp : MonoBehaviour
 
     public GameObject CommandObj;           //コマンドボタン出現させるため
 
+    public float requestRate = 5;
+
     // Use this for initialization
     void Start ()
     {
@@ -74,8 +76,15 @@ public class PowerUp : MonoBehaviour
         }
 
         //仮として次のレベル分の魂を要求される。
-        if (SpiritManager.spiritList.Count >= 1)
+        if (SpiritManager.spiritList.Count >= (int)(growPoint.CurrentSpiritLevel / requestRate) + 1)
         {
+            for (int i = 0; i < (int)(growPoint.CurrentSpiritLevel / requestRate) + 1; i++)
+            {              
+                Debug.Log("<color=green>ID</color>" + i + "\n<color=green>ID</color>" + SpiritManager.spiritList[i].GetComponent<Spirit>().id);
+                SpiritManager.spiritList[i].GetComponent<Spirit>().usedFlag = true;
+                Debug.Log("<color=red>Flag</color>" + SpiritManager.spiritList[i].GetComponent<Spirit>().usedFlag);
+            }
+
             //成長値の足し方
             growPoint.CurrentSpiritLevel += 1;
 
@@ -84,11 +93,6 @@ public class PowerUp : MonoBehaviour
             demon.GetComponent<Demons>().powerUp();
 
             SpiritManager.useSpiritFlag = true;
-
-            for (int i = 0; i < 1; i++)
-            {
-                SpiritManager.spiritList.RemoveAt(i);
-            }
         }
     }
 
