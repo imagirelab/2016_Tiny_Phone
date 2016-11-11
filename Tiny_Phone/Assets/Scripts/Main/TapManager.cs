@@ -75,7 +75,7 @@ public class TapManager : MonoBehaviour
             }
             else
             {
-                if(buttonDownObj.tag == "PowerUp")
+                if(buttonDownObj != null && buttonDownObj.tag == "PowerUp")
                 {
                     buttonDownObj.transform.GetChild(0).gameObject.SetActive(false);
                 }

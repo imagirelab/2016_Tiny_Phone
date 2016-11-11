@@ -80,9 +80,9 @@ public class PowerUp : MonoBehaviour
         {
             for (int i = 0; i < (int)(growPoint.CurrentSpiritLevel / requestRate) + 1; i++)
             {              
-                Debug.Log("<color=green>ID</color>" + i + "\n<color=green>ID</color>" + SpiritManager.spiritList[i].GetComponent<Spirit>().id);
+                Debug.Log("<color=green>i = </color>" + i + "\n<color=green>ID</color>" + SpiritManager.spiritList[i].GetComponent<Spirit>().id);
                 SpiritManager.spiritList[i].GetComponent<Spirit>().usedFlag = true;
-                Debug.Log("<color=red>Flag</color>" + SpiritManager.spiritList[i].GetComponent<Spirit>().usedFlag);
+                Debug.Log("<color=red>i = </color>" + i + "\n<color=red>Flag</color>" + SpiritManager.spiritList[i].GetComponent<Spirit>().usedFlag);
             }
 
             //成長値の足し方

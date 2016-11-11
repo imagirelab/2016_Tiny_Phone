@@ -68,6 +68,8 @@ public class SpiritManager : MonoBehaviour
         //クエリを作成
         NCMBQuery<NCMBObject> demonQuery = new NCMBQuery<NCMBObject>("SpiritData");
 
+        demonQuery.WhereContainedIn("PlayerNo", (StaticVariables.PlayerNo - 1).ToString());
+
         //検索
         demonQuery.FindAsync((List<NCMBObject> objList, NCMBException e) =>
         {
@@ -82,8 +84,8 @@ public class SpiritManager : MonoBehaviour
                 //リストにある数だけ回す
                 foreach (NCMBObject ncmbObj in objList)
                 {
-
-                    if (ncmbObj["PlayerNo"].ToString() == (StaticVariables.PlayerNo - 1).ToString())
+                    //21体以上同時受信した時に弾くために
+                    if (spiritList.Count < SpiritLimit)
                     {
                         //召喚をほぼ同時に行わせないようにタイムラグを発生させる
                         if (summonCounter > SummonLag)
@@ -91,13 +93,19 @@ public class SpiritManager : MonoBehaviour
                             switch (ncmbObj["TYPE"].ToString())
                             {
                                 case "POPO":
-                                    SummonSpirit(POPOspirit);
+                                    GameObject POPOobj = Instantiate(POPOspirit);
+                                    POPOobj.GetComponent<Spirit>().id = spiritList.Count;
+                                    SummonSpirit(POPOobj);
                                     break;
                                 case "PUPU":
-                                    SummonSpirit(PUPUspirit);
+                                    GameObject PUPUobj = Instantiate(PUPUspirit);
+                                    PUPUobj.GetComponent<Spirit>().id = spiritList.Count;
+                                    SummonSpirit(PUPUobj);
                                     break;
                                 case "PIPI":
-                                    SummonSpirit(PIPIspirit);
+                                    GameObject PIPIobj = Instantiate(PIPIspirit);
+                                    PIPIobj.GetComponent<Spirit>().id = spiritList.Count;
+                                    SummonSpirit(PIPIobj);
                                     break;
                                 default:
                                     Debug.Log("Player.cs Receive() ncmbObj[Type] Exception");
@@ -113,22 +121,15 @@ public class SpiritManager : MonoBehaviour
         });
     }
 
-    void SummonSpirit(GameObject spirit)
-    {
-        //21体以上同時受信した時に弾くために
-        if (spiritList.Count < SpiritLimit)
+    void SummonSpirit(GameObject _spirit)
+    {        
+        spiritList.Add(_spirit);
+        spiritList[spiritList.Count - 1].GetComponent<Spirit>().usedFlag = false;
+        summonCounter = 0;
+        for (int i = 0; i < spiritList.Count; i++)
         {
-            spiritList.Add(spirit);
-            spiritList[spiritList.Count - 1].GetComponent<Spirit>().id = spiritList.Count - 1;
-            spiritList[spiritList.Count - 1].GetComponent<Spirit>().usedFlag = false;
-            spiritList[spiritList.Count - 1].transform.position = new Vector3(SummonPos.transform.position.x + Random.Range(-0.5f , 0.5f), SummonPos.transform.position.y, 0);
-            Instantiate(spiritList[spiritList.Count - 1]);
-            summonCounter = 0;
-            for (int i = 0; i < spiritList.Count; i++)
-            {
-                Debug.Log("<color=green>ID</color>" + i + "\n<color=green>ID</color>" + spiritList[spiritList.Count - 1].GetComponent<Spirit>().id);
-                Debug.Log("<color=red>ID</color>" + i + "\n<color=red>Flag</color>" + spiritList[spiritList.Count - 1].GetComponent<Spirit>().usedFlag);
-            }
-        }
+            Debug.Log("<color=green></color>" + i + "\n<color=green>ID</color>" + spiritList[i].GetComponent<Spirit>().id);
+            Debug.Log("<color=red>i =</color>" + i + "\n<color=red>Flag</color>" + spiritList[i].GetComponent<Spirit>().usedFlag);
+        }        
     }
 }
