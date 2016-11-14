@@ -102,7 +102,6 @@ public class LoadManager : MonoBehaviour
         if (unit.GetComponent<Unit>())
         {
             unit.GetComponent<Unit>().status.SetDefault(param.HP, param.ATK, param.SPEED, param.ATKSPEED);
-            unit.GetComponent<Unit>().ATKRange = param.ATKRENGE;
         }
     }
 
@@ -110,12 +109,9 @@ public class LoadManager : MonoBehaviour
     {
         foreach (var cost in CostTable.All)
         {
-            for(int i = 0; i < GameRule.playerNum; i++)
-            {
-                GameObject player = GameObject.Find("Player");
-                if (player.GetComponent<PlayerCost>())
-                    player.GetComponent<PlayerCost>().SetDefault(cost.MaxCost, cost.StateCost, cost.CostParSecond, cost.DemonCost, cost.DemonCostRate, cost.SoldierCost, cost.HouseCost);
-            }
+            GameObject player = GameObject.Find("Player");
+            if (player.GetComponent<PlayerCost>())
+                player.GetComponent<PlayerCost>().SetDefault(cost.MaxCost, cost.StateCost, cost.CostParSecond, cost.DemonCost, cost.DemonCostRate, cost.SoldierCost, cost.HouseCost);
         }
     }
 }

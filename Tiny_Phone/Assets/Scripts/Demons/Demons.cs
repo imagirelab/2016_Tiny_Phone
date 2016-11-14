@@ -21,10 +21,6 @@ public class Demons : Unit
 
     //悪魔がなる魂オブジェクト
     public GameObject spirit;
-
-    //悪魔に作られた画面のプレイヤーのIDを入れておく変数
-    private int playerID;
-    public int PlayerID { set { playerID = value; } }
     
     //private float time;                 //時間
 

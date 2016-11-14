@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -122,6 +116,8 @@
     <Compile Include="Assets\Scripts\Main\Deadly.cs" />
     <Compile Include="Assets\Scripts\Main\DragObject.cs" />
     <Compile Include="Assets\Scripts\Main\PowerUp.cs" />
+    <Compile Include="Assets\Scripts\Main\Receiver.cs" />
+    <Compile Include="Assets\Scripts\Main\SceneManager.cs" />
     <Compile Include="Assets\Scripts\Main\Spirit.cs" />
     <Compile Include="Assets\Scripts\Main\SpiritManager.cs" />
     <Compile Include="Assets\Scripts\Main\StatusBar.cs" />

@@ -49,14 +49,7 @@ public class MatchingEnd : MonoBehaviour
                 //リストにある数だけ回す
                 foreach (NCMBObject ncmbObj in objList)
                 {
-                    if (ncmbObj["PlayerNo"].ToString() == "0")
-                    {
-
-                    }
-                    else
-                    {
-                        ncmbObj.DeleteAsync();
-                    }
+                    ncmbObj.DeleteAsync();
                 }
             }
         });

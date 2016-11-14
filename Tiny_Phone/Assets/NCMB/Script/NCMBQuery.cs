@@ -589,10 +589,12 @@ namespace NCMB
 				Platform.RunOnMainThread (delegate {
 					callback (resultList, error);
 				});
-
-				return;
+                return;
 			});
-		}
+
+            StaticVariables.GetState = true;
+
+        }
 
 		/// <summary>
 		/// <para>FindAsync用レスポンス処理</para>

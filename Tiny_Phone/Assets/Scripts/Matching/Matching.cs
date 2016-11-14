@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using NCMB;
 
@@ -9,8 +8,6 @@ public class Matching : MonoBehaviour
     public int ReceiveCountflame = 300;
 
     private int flameCount = 0;
-
-    private int latestNo;
 
     private bool Player1okFlag;
     private bool Player2okFlag;
@@ -22,7 +19,6 @@ public class Matching : MonoBehaviour
     void Start ()
     {
         flameCount = 0;
-        latestNo = 0;
         Player1okFlag = false;
         Player2okFlag = false;
         sortokFlag = false;
@@ -61,7 +57,7 @@ public class Matching : MonoBehaviour
 
         if(Player1okFlag && Player2okFlag && StaticVariables.PlayerNo <= 2)
         {
-            Application.LoadLevel("main");
+            UnityEngine.SceneManagement.SceneManager.LoadScene(1);
         }
     }
 
