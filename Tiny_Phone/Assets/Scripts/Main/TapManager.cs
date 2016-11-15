@@ -48,36 +48,39 @@ public class TapManager : MonoBehaviour
         //マウスボタンを離したときのみ
         if(Input.GetMouseButtonUp(0))
         {
-            //タップ地点に当たり判定があった場合
-            if (aCollider2d)
+            if (buttonDownObj != null)
             {
-                buttonUpObj = aCollider2d.gameObject;
+                //タップ地点に当たり判定があった場合
+                if (aCollider2d)
+                {
+                    buttonUpObj = aCollider2d.gameObject;
 
-                //パワーアップボタンかつ押した時と同じオブジェクトか確認
-                if (buttonUpObj.tag == "PowerUp" && buttonUpObj == buttonDownObj)
-                {
-                    buttonDownObj.GetComponent<PowerUp>().runFlag = true;
-                }
-                //キャラボタンかつ押した時と同じオブジェクトか確認
-                else if (buttonUpObj.tag == "Chara" && buttonUpObj == buttonDownObj)
-                {
-                    buttonDownObj.GetComponent<CharaButton>().runFlag = true;
-                }
-                //離した時にコマンドボタンか確認
-                else if (buttonUpObj.tag == "Command")
-                {
-                    buttonUpObj.GetComponent<CharaButton>().CommandCheck();
+                    //パワーアップボタンかつ押した時と同じオブジェクトか確認
+                    if (buttonUpObj.tag == "PowerUp" && buttonUpObj == buttonDownObj)
+                    {
+                        buttonDownObj.GetComponent<PowerUp>().runFlag = true;
+                    }
+                    //キャラボタンかつ押した時と同じオブジェクトか確認
+                    else if (buttonUpObj.tag == "Chara" && buttonUpObj == buttonDownObj)
+                    {
+                        buttonDownObj.GetComponent<CharaButton>().runFlag = true;
+                    }
+                    //離した時にコマンドボタンか確認
+                    else if (buttonUpObj.tag == "Command")
+                    {
+                        buttonUpObj.GetComponent<CharaButton>().CommandCheck();
+                    }
+                    else
+                    {
+                        buttonDownObj.transform.GetChild(0).gameObject.SetActive(false);
+                    }
                 }
                 else
                 {
-                    buttonDownObj.transform.GetChild(0).gameObject.SetActive(false);
-                }
-            }
-            else
-            {
-                if(buttonDownObj != null && buttonDownObj.tag == "PowerUp")
-                {
-                    buttonDownObj.transform.GetChild(0).gameObject.SetActive(false);
+                    if (buttonDownObj.tag == "PowerUp")
+                    {
+                        buttonDownObj.transform.GetChild(0).gameObject.SetActive(false);
+                    }
                 }
             }
         }

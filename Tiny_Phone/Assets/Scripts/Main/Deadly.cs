@@ -36,7 +36,7 @@ public class Deadly : MonoBehaviour
 
                 for(int i = 0; i < deadlyCost; i++)
                 {
-                    SpiritManager.spiritList.RemoveAt(0);
+                    SpiritManager.spiritList[i].GetComponent<Spirit>().usedFlag = true;
                 }
 
                 //データ送信

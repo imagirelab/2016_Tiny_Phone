@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
+using NCMB;
 
-public class PlayerCost : MonoBehaviour {
+public class PlayerCost : Receiver {
 
     [SerializeField, TooltipAttribute("最大コスト")]
     int MaxCost = 0;
@@ -43,7 +45,8 @@ public class PlayerCost : MonoBehaviour {
         _text.text = "COST: " + currentCost + "/" + MaxCost;
     }
 	
-	void Update () {
+	void Update ()
+    {
         //毎秒増えるコスト
         if (time >= 1.0f)
         {
@@ -56,17 +59,13 @@ public class PlayerCost : MonoBehaviour {
         //1フレームあたりの時間を取得
         time += Time.deltaTime;
 
-        _text.text = "COST: " + currentCost + "/" + MaxCost;
-    }
+        if (flamecounter > ReceiveCountflame && StaticVariables.GetState)
+        {
+            currentCost = CostReceive(currentCost, MaxCost);
+            Debug.Log("\n<color=yellow>Cost = </color>" + currentCost);
+        }
 
-    //コストを足す
-    //上限を超えたときは上限値を代入する
-    public void AddCost(int addcost)
-    {
-        if (currentCost + addcost <= MaxCost)
-            currentCost += addcost;
-        else
-            currentCost = MaxCost;
+        _text.text = "COST: " + currentCost + "/" + MaxCost;
     }
 
     //コストが使えるかどうか

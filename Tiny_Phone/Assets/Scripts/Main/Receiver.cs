@@ -12,6 +12,7 @@ public class Receiver : MonoBehaviour
 
     [HideInInspector]
     protected static bool spiritOKFlag;
+    protected static bool costOKFlag;
 
     [TooltipAttribute("受信フレームカウント")]
     public int ReceiveCountflame = 60;
@@ -21,6 +22,7 @@ public class Receiver : MonoBehaviour
     {
         flamecounter = 0;
         spiritOKFlag = false;
+        costOKFlag = false;
 
     }
 	
@@ -29,7 +31,7 @@ public class Receiver : MonoBehaviour
     {
         flamecounter++;
 
-        if(spiritOKFlag)
+        if(spiritOKFlag && costOKFlag)
         {
             StaticVariables.GetState = false;
             flamecounter = 0;
@@ -42,7 +44,7 @@ public class Receiver : MonoBehaviour
         //クエリを作成
         NCMBQuery<NCMBObject> demonQuery = new NCMBQuery<NCMBObject>("SpiritData");
 
-        demonQuery.WhereContainedIn("PlayerNo", (StaticVariables.PlayerNo - 1).ToString());
+        demonQuery.WhereContainedIn("PlayerNo", (StaticVariables.PlayerNo).ToString());
 
         //検索
         demonQuery.FindAsync((List<NCMBObject> objList, NCMBException e) =>
@@ -110,5 +112,55 @@ public class Receiver : MonoBehaviour
             Debug.Log("<color=green></color>" + i + "\n<color=green>ID</color>" + spiritList[i].GetComponent<Spirit>().id);
             Debug.Log("<color=red>i =</color>" + i + "\n<color=red>Flag</color>" + spiritList[i].GetComponent<Spirit>().usedFlag);
         }
+    }
+
+    public int CostReceive(int currentCost, int MaxCost)
+    {
+        //クエリを作成
+        NCMBQuery<NCMBObject> costQuery = new NCMBQuery<NCMBObject>("CostData");
+
+        costQuery.WhereContainedIn("PlayerNo", (StaticVariables.PlayerNo).ToString());
+
+        //検索
+        costQuery.FindAsync((List<NCMBObject> objList, NCMBException e) =>
+        {
+            //検索失敗時
+            if (e != null)
+            {
+                Debug.Log(e.ToString());
+                return;
+            }
+            else
+            {
+                //リストにある数だけ回す
+                foreach (NCMBObject ncmbObj in objList)
+                {
+                    int addCostData = System.Convert.ToInt32(ncmbObj["Cost"].ToString());
+
+                    currentCost = AddCost(currentCost, addCostData, MaxCost);
+
+                    Debug.Log("\n<color=green>Cost = </color>" + currentCost);
+
+                    //記録を取ったら消す
+                    ncmbObj.DeleteAsync();
+                }
+            }
+        });
+
+        costOKFlag = true;
+
+        return currentCost;
+    }
+
+    //コストを足す
+    //上限を超えたときは上限値を代入する
+    int AddCost(int currentCost, int addcost, int MaxCost)
+    {
+        if (currentCost + addcost <= MaxCost)
+            currentCost += addcost;
+        else
+            currentCost = MaxCost;
+
+        return currentCost;
     }
 }
